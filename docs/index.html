@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scoreline Audit · Google live score accuracy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700;125,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F7F4; --panel:#FFFFFF; --ink:#15231B; --muted:#5C6B61;
+    --hairline:#DCE4DA; --pitch:#1F7A44; --pitch-deep:#14532D;
+    --amber:#C97B12; --red:#C2371F; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--paper);color:var(--ink);font:16px/1.55 'Inter',system-ui,sans-serif;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px 64px}
+  a{color:var(--pitch-deep)}
+
+  /* top bar */
+  header{display:flex;align-items:center;gap:14px;padding:22px 0;border-bottom:1px solid var(--hairline);flex-wrap:wrap}
+  .wordmark{font-family:'Archivo',sans-serif;font-weight:800;font-stretch:125%;letter-spacing:.04em;font-size:15px;text-transform:uppercase}
+  .wordmark span{color:var(--pitch)}
+  .updated{margin-left:auto;font-size:13px;color:var(--muted)}
+  .updated b{color:var(--ink);font-weight:600}
+
+  /* referee-card status */
+  .card-status{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:13px;
+    padding:5px 12px 5px 7px;border:1px solid var(--hairline);border-radius:999px;background:var(--panel)}
+  .card{width:13px;height:18px;border-radius:3px;display:inline-block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+  .ok  .card{background:var(--pitch)}   .ok{color:var(--pitch-deep)}
+  .warn .card{background:var(--amber)}  .warn{color:#8a5408}
+  .bad .card{background:var(--red)}     .bad{color:#8f2412}
+  .none .card{background:#aab4ab}       .none{color:var(--muted)}
+
+  .demo{margin:18px 0 0;padding:10px 14px;border:1px dashed var(--amber);border-radius:8px;
+    background:#FCF4E7;font-size:14px;color:#7a4a06}
+
+  /* hero verdict */
+  .hero{padding:40px 0 30px;display:grid;grid-template-columns:auto 1fr;gap:8px 36px;align-items:end}
+  .big{font-family:var(--mono);font-weight:700;font-size:clamp(64px,12vw,108px);line-height:.95;
+    letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .big small{font-size:.38em;font-weight:500;color:var(--muted);letter-spacing:0}
+  .eyebrow{grid-column:1/-1;font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:700;
+    text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--muted)}
+  .verdict{font-size:18px;max-width:46ch;padding-bottom:10px}
+  .verdict b{font-weight:600}
+  @media (max-width:640px){.hero{grid-template-columns:1fr}.verdict{padding-bottom:0}}
+
+  /* kpis */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hairline);
+    border:1px solid var(--hairline);border-radius:10px;overflow:hidden}
+  .kpi{background:var(--panel);padding:16px 18px}
+  .kpi .v{font-family:var(--mono);font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:2px}
+  @media (max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}}
+
+  h2{font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:800;text-transform:uppercase;
+    letter-spacing:.06em;font-size:14px;margin:44px 0 14px}
+  .h2sub{font-size:13.5px;color:var(--muted);margin:-8px 0 14px;max-width:64ch}
+
+  /* pitch chart */
+  .pitch-panel{background:linear-gradient(180deg,#227C47 0%,#1C6E3E 100%);border-radius:12px;
+    padding:18px 16px 10px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+  .pitch-panel svg{display:block;width:100%;height:auto}
+  .legend{display:flex;gap:18px;font-size:12.5px;color:var(--muted);margin-top:10px;flex-wrap:wrap}
+  .legend i{display:inline-block;width:18px;height:0;border-top:3px solid;margin-right:6px;vertical-align:middle;border-radius:2px}
+
+  /* findings table */
+  table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--hairline);
+    border-radius:10px;overflow:hidden;font-size:14px}
+  th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--hairline)}
+  th{font-family:'Archivo',sans-serif;font-stretch:125%;font-size:11.5px;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--muted);font-weight:700;background:#FBFCFA}
+  tr:last-child td{border-bottom:none}
+  td.mono{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px}
+  .tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600}
+  .tag.latency{background:#FCF4E7;color:#8a5408}
+  .tag.discrepancy,.tag.resolved{background:#FBEAE6;color:#8f2412}
+  .empty{padding:22px;text-align:center;color:var(--muted)}
+
+  /* explainer */
+  .explain{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .ex{background:var(--panel);border:1px solid var(--hairline);border-radius:10px;padding:18px}
+  .ex h3{font-size:14px;font-weight:600;margin-bottom:8px}
+  .ex p{font-size:13.5px;color:var(--muted)}
+  .ex p+p{margin-top:8px}
+  .ex .chip{font-family:var(--mono);font-size:12px;background:var(--paper);padding:1px 6px;border-radius:4px;color:var(--ink)}
+  @media (max-width:760px){.explain{grid-template-columns:1fr}}
+
+  footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--hairline);
+    font-size:12.5px;color:var(--muted);max-width:70ch}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="wordmark">Scoreline <span>Audit</span></div>
+  <div id="status" class="card-status none"><span class="card"></span><span id="statusText">Awaiting data</span></div>
+  <div class="updated">Updated <b id="updatedAt">–</b> <span id="freshness"></span></div>
+</header>
+
+<div id="demoBanner" class="demo" hidden>
+  Sample data is shown. The dashboard switches to live results automatically once the audit agent publishes.
+</div>
+
+<section class="hero">
+  <div class="eyebrow">Google live score accuracy · FIFA World Cup 2026 · last <span id="windowH">24</span> hours</div>
+  <div class="big"><span id="accuracy">–</span><small>%</small></div>
+  <p class="verdict" id="verdictText">Waiting for the first audit cycle.</p>
+</section>
+
+<div class="kpis">
+  <div class="kpi"><div class="v" id="kChecks">–</div><div class="l">Score checks run</div></div>
+  <div class="kpi"><div class="v" id="kLag">–</div><div class="l">Median lag when Google trailed</div></div>
+  <div class="kpi"><div class="v" id="kDisc">–</div><div class="l">Confirmed score errors (&gt;90s)</div></div>
+  <div class="kpi"><div class="v" id="kMatches">–</div><div class="l">Matches audited</div></div>
+</div>
+
+<h2>Accuracy over time</h2>
+<p class="h2sub">Each point is a 15-minute window of live play: the share of checks in that window where Google's
+score matched the reference. A downward drift toward the amber and red lines is the signal to act.</p>
+<div class="pitch-panel"><svg id="chart" viewBox="0 0 920 300" role="img" aria-label="Google score accuracy trend"></svg></div>
+<div class="legend">
+  <span><i style="border-color:#FFFFFF"></i>Google accuracy</span>
+  <span><i style="border-color:#F2C063;border-top-style:dashed"></i>99% watch line</span>
+  <span><i style="border-color:#F0907A;border-top-style:dashed"></i>95% action line</span>
+</div>
+
+<h2>Findings log</h2>
+<p class="h2sub">Every moment the two sources disagreed on a score. Latency means they re-converged within the
+90-second tolerance; a discrepancy means the disagreement outlasted it.</p>
+<table>
+  <thead><tr><th>Time (UTC)</th><th>Type</th><th>Match</th><th>Reference</th><th>Google</th><th>Lasted</th><th>Behind</th></tr></thead>
+  <tbody id="findings"><tr><td colspan="7" class="empty">No findings yet. That's a clean sheet.</td></tr></tbody>
+</table>
+
+<h2>How this audit works</h2>
+<div class="explain">
+  <div class="ex">
+    <h3>What this service does</h3>
+    <p>During every live World Cup match, an automated agent reads the score Google displays in its
+    search results and, in the same moment, the score from an independent reference feed
+    (<span id="refName">FotMob</span>, powered by Opta data). It repeats this every 30 seconds.</p>
+  </div>
+  <div class="ex">
+    <h3>What is measured</h3>
+    <p><b>Accuracy</b>: the share of checks where Google's score matched the reference exactly.</p>
+    <p><b>Lag</b>: when the sources briefly disagreed (typically right after a goal), how many seconds Google
+    took to catch up.</p>
+    <p><b>Score errors</b>: disagreements that persisted beyond <span class="chip">90s</span>, which can no
+    longer be explained by normal feed latency.</p>
+  </div>
+  <div class="ex">
+    <h3>How to read the verdict</h3>
+    <p><b style="color:var(--pitch-deep)">Green card</b>: accuracy is high and steady. No action.</p>
+    <p><b style="color:#8a5408">Amber card</b>: accuracy is trending down or lag is growing. Watch closely.</p>
+    <p><b style="color:#8f2412">Red card</b>: a confirmed score error occurred in the last hour, or accuracy
+    dropped below 95%. Raise it with Google's sports data provider with the findings log as evidence.</p>
+  </div>
+</div>
+
+<footer id="method">
+  Methodology: scores are compared as displayed to end users, on a 30-second cycle, during live play only.
+  Disagreements shorter than 90 seconds are classified as feed latency, not errors. The reference feed is
+  independent of Google's data supply chain. This page reloads its data every 60 seconds.
+</footer>
+
+</div>
+<script>
+const DATA_URL = 'data/audit.json';
+const $ = id => document.getElementById(id);
+
+async function load(){
+  try{
+    const r = await fetch(DATA_URL + '?t=' + Date.now(), {cache:'no-store'});
+    if(!r.ok) throw new Error(r.status);
+    render(await r.json());
+  }catch(e){
+    $('statusText').textContent = 'Data unavailable';
+  }
+}
+
+function render(d){
+  const t = d.totals || {};
+  $('demoBanner').hidden = !d.demo;
+  $('windowH').textContent = d.window_hours ?? 24;
+  $('refName').textContent = d.reference || 'FotMob';
+
+  // freshness
+  const gen = new Date(d.generated_at);
+  $('updatedAt').textContent = gen.toLocaleString(undefined,{hour:'2-digit',minute:'2-digit'});
+  const ageMin = (Date.now() - gen.getTime())/60000;
+  $('freshness').textContent = ageMin > 10 ? '· audit agent not currently running' : '· live';
+
+  // headline
+  const acc = t.accuracy_pct;
+  $('accuracy').textContent = acc == null ? '–' : acc.toFixed(1);
+  $('kChecks').textContent  = t.checks ?? '–';
+  $('kLag').textContent     = t.median_lag_s == null ? '0s' : t.median_lag_s + 's';
+  $('kDisc').textContent    = t.score_discrepancies ?? '–';
+  $('kMatches').textContent = t.matches ?? '–';
+
+  // status: red / amber / green
+  const latest = (d.trend && d.trend.length) ? d.trend[d.trend.length-1].accuracy_pct : null;
+  const recentDisc = (d.findings||[]).some(f =>
+    f.kind === 'discrepancy' && (Date.now() - new Date(f.ts).getTime()) < 3600000);
+  let cls='none', txt='Awaiting data', verdict='Waiting for the first audit cycle.';
+  if (acc != null){
+    if (recentDisc || (latest != null && latest < 95)){
+      cls='bad'; txt='Red card · action needed';
+      verdict = 'Google showed a wrong score beyond normal feed delay. Use the findings log below as evidence with the data provider.';
+    } else if ((d.trend_direction === 'down' && acc < 99) || (t.median_lag_s||0) > 60){
+      cls='warn'; txt='Amber card · degrading';
+      verdict = 'Google is still broadly correct, but accuracy is trending down or lag is growing. Keep watching before escalating.';
+    } else {
+      cls='ok'; txt='Green card · healthy';
+      verdict = `Google matched the reference on ${t.agreed} of ${t.checks} checks` +
+        (t.median_lag_s ? `, trailing by a median of ${t.median_lag_s}s when goals landed.` : ' with no measurable lag events.');
+    }
+  }
+  $('status').className = 'card-status ' + cls;
+  $('statusText').textContent = txt;
+  $('verdictText').innerHTML = verdict;
+
+  drawChart(d.trend || []);
+  drawFindings(d.findings || []);
+}
+
+function drawChart(trend){
+  const svg = $('chart'), W=920, H=300, pad={l:46,r:14,t:16,b:34};
+  const yMin=90, yMax=100;
+  const X = i => trend.length<2 ? W/2 : pad.l + i*(W-pad.l-pad.r)/(trend.length-1);
+  const Y = v => pad.t + (yMax - Math.max(v,yMin))*(H-pad.t-pad.b)/(yMax-yMin);
+  let s = '';
+
+  // pitch markings: halfway line + centre circle, faint
+  s += `<line x1="${(pad.l+W-pad.r)/2}" y1="${pad.t}" x2="${(pad.l+W-pad.r)/2}" y2="${H-pad.b}" stroke="rgba(255,255,255,.18)" stroke-width="2"/>`;
+  s += `<circle cx="${(pad.l+W-pad.r)/2}" cy="${(pad.t+H-pad.b)/2}" r="46" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="2"/>`;
+
+  // gridlines + axis labels
+  for (const v of [100,98,96,94,92,90]){
+    s += `<line x1="${pad.l}" y1="${Y(v)}" x2="${W-pad.r}" y2="${Y(v)}" stroke="rgba(255,255,255,.10)"/>`;
+    s += `<text x="${pad.l-8}" y="${Y(v)+4}" text-anchor="end" font-size="11" fill="rgba(255,255,255,.75)" font-family="JetBrains Mono">${v}</text>`;
+  }
+  // thresholds
+  s += `<line x1="${pad.l}" y1="${Y(99)}" x2="${W-pad.r}" y2="${Y(99)}" stroke="#F2C063" stroke-dasharray="6 5" stroke-width="2"/>`;
+  s += `<line x1="${pad.l}" y1="${Y(95)}" x2="${W-pad.r}" y2="${Y(95)}" stroke="#F0907A" stroke-dasharray="6 5" stroke-width="2"/>`;
+
+  if (!trend.length){
+    s += `<text x="${W/2}" y="${H/2}" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="14" font-family="Inter">No live-match data in the window yet</text>`;
+  } else {
+    const pts = trend.map((b,i)=>[X(i), Y(b.accuracy_pct)]);
+    s += `<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
+    pts.forEach((p,i)=>{
+      const v = trend[i].accuracy_pct;
+      const c = v < 95 ? '#F0907A' : (v < 99 ? '#F2C063' : '#FFFFFF');
+      s += `<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="${c}"><title>${new Date(trend[i].bucket_start).toLocaleTimeString()} · ${v}% (${trend[i].checks} checks)</title></circle>`;
+    });
+    // sparse time labels
+    const step = Math.max(1, Math.floor(trend.length/6));
+    trend.forEach((b,i)=>{
+      if (i % step === 0 || i === trend.length-1){
+        const lbl = new Date(b.bucket_start).toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
+        s += `<text x="${X(i)}" y="${H-10}" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.75)" font-family="JetBrains Mono">${lbl}</text>`;
+      }
+    });
+  }
+  svg.innerHTML = s;
+}
+
+function drawFindings(findings){
+  const tb = $('findings');
+  if (!findings.length){
+    tb.innerHTML = '<tr><td colspan="7" class="empty">No findings yet. That\'s a clean sheet.</td></tr>';
+    return;
+  }
+  tb.innerHTML = findings.map(f => `
+    <tr>
+      <td class="mono">${new Date(f.ts).toISOString().slice(11,16)}</td>
+      <td><span class="tag ${f.kind}">${f.kind === 'discrepancy' ? 'score error' : f.kind}</span></td>
+      <td>${esc(f.match)}</td>
+      <td class="mono">${esc(f.fotmob)}</td>
+      <td class="mono">${esc(f.google)}</td>
+      <td class="mono">${f.duration_s}s</td>
+      <td>${esc(f.laggard)}</td>
+    </tr>`).join('');
+}
+
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+load();
+setInterval(load, 60000);
+</script>
+</body>
+</html>
