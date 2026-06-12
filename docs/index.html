@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIFA Score Accuracy Audit · Google vs FotMob</title>
+<title>FIFA Score Accuracy Audit · G vs FM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700;125,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -98,9 +98,9 @@
 </header>
 
 <p class="purpose">
-This dashboard measures <b>how accurately Google search shows live FIFA World Cup scores</b>.
-Google licenses these scores from a sports data provider. During every live match, an automated
-check compares the score on Google against <b>FotMob.com, the source of truth</b>, every 30 seconds.
+This dashboard measures <b>how accurately G search shows live FIFA World Cup scores</b>.
+G licenses these scores from a sports data provider. During every live match, an automated
+check compares the score on G against <b>FM, the source of truth</b>, every 30 seconds.
 </p>
 
 <div id="demoBanner" class="demo" hidden>
@@ -108,33 +108,33 @@ check compares the score on Google against <b>FotMob.com, the source of truth</b
 </div>
 
 <section class="hero">
-  <div class="eyebrow">Google score accuracy · last <span id="windowH">24</span> hours</div>
+  <div class="eyebrow">G score accuracy · last <span id="windowH">24</span> hours</div>
   <div class="big"><span id="accuracy">–</span><small>%</small></div>
-  <p class="herolabel">of checks where Google's score matched FotMob exactly</p>
+  <p class="herolabel">of checks where G's score matched FM exactly</p>
   <p class="verdict" id="verdictText">Waiting for the first audit cycle.</p>
 </section>
 
 <div class="kpis">
   <div class="kpi"><div class="v" id="kChecks">–</div><div class="l">Checks run</div><div class="d">score comparisons made</div></div>
-  <div class="kpi"><div class="v" id="kLag">–</div><div class="l">Median delay</div><div class="d">time for Google to catch up after a goal</div></div>
+  <div class="kpi"><div class="v" id="kLag">–</div><div class="l">Median delay</div><div class="d">time for G to catch up after a goal</div></div>
   <div class="kpi"><div class="v" id="kDisc">–</div><div class="l">Score errors</div><div class="d">wrong for over 90 seconds</div></div>
   <div class="kpi"><div class="v" id="kMatches">–</div><div class="l">Matches audited</div><div class="d">in the last 24 hours</div></div>
 </div>
 
 <h2>Accuracy over time</h2>
 <p class="h2sub">Each dot is 15 minutes of live play. Higher is better. If the line drifts down toward
-the dashed thresholds, Google's accuracy is getting worse.</p>
-<div class="pitch-panel"><svg id="chart" viewBox="0 0 920 300" role="img" aria-label="Google score accuracy trend"></svg></div>
+the dashed thresholds, G's accuracy is getting worse.</p>
+<div class="pitch-panel"><svg id="chart" viewBox="0 0 920 300" role="img" aria-label="G score accuracy trend"></svg></div>
 <div class="legend">
-  <span><i style="border-color:#FFFFFF"></i>Google accuracy</span>
+  <span><i style="border-color:#FFFFFF"></i>G accuracy</span>
   <span><i style="border-color:#F2C063;border-top-style:dashed"></i>99% · watch</span>
   <span><i style="border-color:#F0907A;border-top-style:dashed"></i>95% · action needed</span>
 </div>
 
 <h2>Disagreement log</h2>
-<p class="h2sub">Every moment Google's score differed from FotMob, and how long it took to correct.</p>
+<p class="h2sub">Every moment G's score differed from FM, and how long it took to correct.</p>
 <table>
-  <thead><tr><th>Time (UTC)</th><th>Type</th><th>Match</th><th>FotMob (truth)</th><th>Google</th><th>Lasted</th></tr></thead>
+  <thead><tr><th>Time (UTC)</th><th>Type</th><th>Match</th><th>FM (truth)</th><th>G</th><th>Lasted</th></tr></thead>
   <tbody id="findings"><tr><td colspan="6" class="empty">No disagreements recorded.</td></tr></tbody>
 </table>
 
@@ -142,25 +142,25 @@ the dashed thresholds, Google's accuracy is getting worse.</p>
 <div class="guide">
   <dl>
     <dt>Accuracy</dt>
-    <dd>The percentage of all checks where Google's score matched FotMob exactly. This is the headline number.</dd>
+    <dd>The percentage of all checks where G's score matched FM exactly. This is the headline number.</dd>
     <dt>Delay</dt>
-    <dd>Right after a goal, sources can briefly disagree while feeds update. If Google corrects itself
+    <dd>Right after a goal, sources can briefly disagree while feeds update. If G corrects itself
     <b>within 90 seconds</b>, it counts as a delay, which is normal, and we record how long it took.</dd>
     <dt>Score error</dt>
-    <dd>If Google stays wrong for <b>more than 90 seconds</b>, normal delay can no longer explain it.
+    <dd>If G stays wrong for <b>more than 90 seconds</b>, normal delay can no longer explain it.
     This counts as an error and is the failure that matters.</dd>
     <dt><span style="color:var(--pitch-deep)">● Accurate</span></dt>
     <dd>No recent errors and accuracy is holding. No action needed.</dd>
     <dt><span style="color:#8a5408">● Degrading</span></dt>
     <dd>Accuracy is trending down or delays are growing. Keep watching.</dd>
     <dt><span style="color:#8f2412">● Action needed</span></dt>
-    <dd>A score error occurred in the last hour, or accuracy fell below 95%. <b>Raise it with Google's
+    <dd>A score error occurred in the last hour, or accuracy fell below 95%. <b>Raise it with G's
     data provider</b>, using the disagreement log above as evidence.</dd>
   </dl>
 </div>
 
 <footer>
-  Checks run every 30 seconds during live play only. FotMob (Opta data) is treated as the source of
+  Checks run every 30 seconds during live play only. FM (Opta data) is treated as the source of
   truth in this version. This page refreshes its data every 60 seconds.
 </footer>
 
@@ -203,13 +203,13 @@ function render(d){
   if (acc != null){
     if (recentDisc || (latest != null && latest < 95)){
       cls='bad'; txt='Action needed';
-      verdict = 'Google showed a wrong score for longer than normal delay can explain. The disagreement log below is the evidence to raise with Google\'s data provider.';
+      verdict = 'G showed a wrong score for longer than normal delay can explain. The disagreement log below is the evidence to raise with G\'s data provider.';
     } else if ((d.trend_direction === 'down' && acc < 99) || (t.median_lag_s||0) > 60){
       cls='warn'; txt='Degrading';
-      verdict = 'Google is still broadly correct, but accuracy is trending down or delays are growing. Keep watching before escalating.';
+      verdict = 'G is still broadly correct, but accuracy is trending down or delays are growing. Keep watching before escalating.';
     } else {
       cls='ok'; txt='Accurate';
-      verdict = `Google matched FotMob on ${t.agreed} of ${t.checks} checks` +
+      verdict = `G matched FM on ${t.agreed} of ${t.checks} checks` +
         (t.median_lag_s ? `, taking a median of ${t.median_lag_s}s to catch up after goals.` : ', with no measurable delays.');
     }
   }
@@ -270,8 +270,8 @@ function drawFindings(findings){
       <td class="mono">${new Date(f.ts).toISOString().slice(11,16)}</td>
       <td><span class="tag ${f.kind}">${f.kind === 'discrepancy' ? 'score error' : 'delay'}</span></td>
       <td>${esc(f.match)}</td>
-      <td class="mono">${esc(f.fotmob)}</td>
-      <td class="mono">${esc(f.google)}</td>
+      <td class="mono">${esc(f.truth)}</td>
+      <td class="mono">${esc(f.observed)}</td>
       <td class="mono">${f.duration_s}s</td>
     </tr>`).join('');
 }

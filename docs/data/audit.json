@@ -1,8 +1,8 @@
 {
  "generated_at": "2026-06-11T23:07:22Z",
  "demo": true,
- "reference": "FotMob",
- "subject": "Google live score box",
+ "reference": "FM",
+ "subject": "G live scores",
  "window_hours": 24,
  "tolerance_s": 90,
  "totals": {
@@ -11,12 +11,12 @@
   "accuracy_pct": 98.3,
   "matches": 2,
   "score_discrepancies": 1,
-  "latency_events_google": 6,
   "median_lag_s": 37.5,
   "max_lag_s": 71.0,
-  "laggard_counts": {
-   "google": 6,
-   "fotmob": 0
+  "latency_events": 6,
+  "behind_counts": {
+   "G": 6,
+   "FM": 0
   }
  },
  "trend": [
@@ -92,64 +92,64 @@
    "ts": "2026-06-11T22:42:22Z",
    "kind": "latency",
    "match": "South Korea vs Czechia",
-   "fotmob": "1-0",
-   "google": "0-0",
    "duration_s": 71.0,
-   "laggard": "google"
+   "truth": "1-0",
+   "observed": "0-0",
+   "behind": "G"
   },
   {
    "ts": "2026-06-11T22:27:22Z",
    "kind": "discrepancy",
    "match": "South Korea vs Czechia",
-   "fotmob": "2-0",
-   "google": "1-0",
    "duration_s": 147.0,
-   "laggard": "google"
+   "truth": "2-0",
+   "observed": "1-0",
+   "behind": "G"
   },
   {
    "ts": "2026-06-11T22:12:22Z",
    "kind": "latency",
    "match": "South Korea vs Czechia",
-   "fotmob": "1-0",
-   "google": "0-0",
    "duration_s": 64.0,
-   "laggard": "google"
+   "truth": "1-0",
+   "observed": "0-0",
+   "behind": "G"
   },
   {
    "ts": "2026-06-11T21:57:22Z",
    "kind": "latency",
    "match": "South Korea vs Czechia",
-   "fotmob": "1-0",
-   "google": "0-0",
    "duration_s": 44.0,
-   "laggard": "google"
+   "truth": "1-0",
+   "observed": "0-0",
+   "behind": "G"
   },
   {
    "ts": "2026-06-11T21:32:22Z",
    "kind": "latency",
    "match": "South Korea vs Czechia",
-   "fotmob": "1-0",
-   "google": "0-0",
    "duration_s": 18.0,
-   "laggard": "google"
+   "truth": "1-0",
+   "observed": "0-0",
+   "behind": "G"
   },
   {
    "ts": "2026-06-11T20:57:22Z",
    "kind": "latency",
    "match": "South Korea vs Czechia",
-   "fotmob": "1-0",
-   "google": "0-0",
    "duration_s": 31.0,
-   "laggard": "google"
+   "truth": "1-0",
+   "observed": "0-0",
+   "behind": "G"
   },
   {
    "ts": "2026-06-11T20:27:22Z",
    "kind": "latency",
    "match": "South Korea vs Czechia",
-   "fotmob": "1-0",
-   "google": "0-0",
    "duration_s": 22.0,
-   "laggard": "google"
+   "truth": "1-0",
+   "observed": "0-0",
+   "behind": "G"
   }
  ],
  "match_list": [

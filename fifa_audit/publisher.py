@@ -42,10 +42,11 @@ def export(store: Store, out_path: str, demo: bool = False) -> dict:
 
     lags = [f[6] for f in findings if f[1] == "latency" and f[7] == "google"]
     discrepancies = [f for f in findings if f[1] == "discrepancy"]
-    laggard_counts = {"google": 0, "fotmob": 0}
+    label = {"google": "G", "fotmob": "FM"}
+    behind_counts = {"G": 0, "FM": 0}
     for f in findings:
-        if f[1] in ("latency", "resolved") and f[7] in laggard_counts:
-            laggard_counts[f[7]] += 1
+        if f[1] in ("latency", "resolved") and f[7] in label:
+            behind_counts[label[f[7]]] += 1
 
     # 15-minute accuracy buckets
     buckets: dict[int, list[int]] = {}
@@ -64,8 +65,8 @@ def export(store: Store, out_path: str, demo: bool = False) -> dict:
     payload = {
         "generated_at": _iso(now),
         "demo": demo,
-        "reference": "FotMob",
-        "subject": "Google live score box",
+        "reference": "FM",
+        "subject": "G live scores",
         "window_hours": WINDOW_HOURS,
         "tolerance_s": 90,
         "totals": {
@@ -74,18 +75,18 @@ def export(store: Store, out_path: str, demo: bool = False) -> dict:
             "accuracy_pct": round(100 * agreed / total, 1) if total else None,
             "matches": len(matches),
             "score_discrepancies": len(discrepancies),
-            "latency_events_google": len(lags),
+            "latency_events": len(lags),
             "median_lag_s": round(statistics.median(lags), 1) if lags else None,
             "max_lag_s": round(max(lags), 1) if lags else None,
-            "laggard_counts": laggard_counts,
+            "behind_counts": behind_counts,
         },
         "trend": trend,
         "trend_direction": _trend_direction(trend),
         "findings": [
             {
                 "ts": _iso(f[0]), "kind": f[1], "match": f[2],
-                "fotmob": f[4], "google": f[5],
-                "duration_s": round(f[6], 1), "laggard": f[7] or "",
+                "truth": f[4], "observed": f[5],
+                "duration_s": round(f[6], 1), "behind": {"google": "G", "fotmob": "FM"}.get(f[7], ""),
             }
             for f in findings
         ],
