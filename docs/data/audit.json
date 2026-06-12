@@ -1,159 +1,26 @@
 {
- "generated_at": "2026-06-11T23:07:22Z",
- "demo": true,
+ "generated_at": "2026-06-12T01:42:17Z",
+ "demo": false,
  "reference": "FM",
  "subject": "G live scores",
  "window_hours": 24,
  "tolerance_s": 90,
  "totals": {
-  "checks": 360,
-  "agreed": 354,
-  "accuracy_pct": 98.3,
-  "matches": 2,
-  "score_discrepancies": 1,
-  "median_lag_s": 37.5,
-  "max_lag_s": 71.0,
-  "latency_events": 6,
+  "checks": 0,
+  "agreed": 0,
+  "accuracy_pct": null,
+  "matches": 0,
+  "score_discrepancies": 0,
+  "latency_events": 0,
+  "median_lag_s": null,
+  "max_lag_s": null,
   "behind_counts": {
-   "G": 6,
+   "G": 0,
    "FM": 0
   }
  },
- "trend": [
-  {
-   "bucket_start": "2026-06-11T20:00:00Z",
-   "checks": 16,
-   "accuracy_pct": 100.0
-  },
-  {
-   "bucket_start": "2026-06-11T20:15:00Z",
-   "checks": 30,
-   "accuracy_pct": 100.0
-  },
-  {
-   "bucket_start": "2026-06-11T20:30:00Z",
-   "checks": 30,
-   "accuracy_pct": 100.0
-  },
-  {
-   "bucket_start": "2026-06-11T20:45:00Z",
-   "checks": 30,
-   "accuracy_pct": 100.0
-  },
-  {
-   "bucket_start": "2026-06-11T21:00:00Z",
-   "checks": 30,
-   "accuracy_pct": 100.0
-  },
-  {
-   "bucket_start": "2026-06-11T21:15:00Z",
-   "checks": 30,
-   "accuracy_pct": 100.0
-  },
-  {
-   "bucket_start": "2026-06-11T21:30:00Z",
-   "checks": 30,
-   "accuracy_pct": 100.0
-  },
-  {
-   "bucket_start": "2026-06-11T21:45:00Z",
-   "checks": 30,
-   "accuracy_pct": 100.0
-  },
-  {
-   "bucket_start": "2026-06-11T22:00:00Z",
-   "checks": 30,
-   "accuracy_pct": 100.0
-  },
-  {
-   "bucket_start": "2026-06-11T22:15:00Z",
-   "checks": 30,
-   "accuracy_pct": 96.7
-  },
-  {
-   "bucket_start": "2026-06-11T22:30:00Z",
-   "checks": 30,
-   "accuracy_pct": 90.0
-  },
-  {
-   "bucket_start": "2026-06-11T22:45:00Z",
-   "checks": 30,
-   "accuracy_pct": 96.7
-  },
-  {
-   "bucket_start": "2026-06-11T23:00:00Z",
-   "checks": 14,
-   "accuracy_pct": 92.9
-  }
- ],
- "trend_direction": "down",
- "findings": [
-  {
-   "ts": "2026-06-11T22:42:22Z",
-   "kind": "latency",
-   "match": "South Korea vs Czechia",
-   "duration_s": 71.0,
-   "truth": "1-0",
-   "observed": "0-0",
-   "behind": "G"
-  },
-  {
-   "ts": "2026-06-11T22:27:22Z",
-   "kind": "discrepancy",
-   "match": "South Korea vs Czechia",
-   "duration_s": 147.0,
-   "truth": "2-0",
-   "observed": "1-0",
-   "behind": "G"
-  },
-  {
-   "ts": "2026-06-11T22:12:22Z",
-   "kind": "latency",
-   "match": "South Korea vs Czechia",
-   "duration_s": 64.0,
-   "truth": "1-0",
-   "observed": "0-0",
-   "behind": "G"
-  },
-  {
-   "ts": "2026-06-11T21:57:22Z",
-   "kind": "latency",
-   "match": "South Korea vs Czechia",
-   "duration_s": 44.0,
-   "truth": "1-0",
-   "observed": "0-0",
-   "behind": "G"
-  },
-  {
-   "ts": "2026-06-11T21:32:22Z",
-   "kind": "latency",
-   "match": "South Korea vs Czechia",
-   "duration_s": 18.0,
-   "truth": "1-0",
-   "observed": "0-0",
-   "behind": "G"
-  },
-  {
-   "ts": "2026-06-11T20:57:22Z",
-   "kind": "latency",
-   "match": "South Korea vs Czechia",
-   "duration_s": 31.0,
-   "truth": "1-0",
-   "observed": "0-0",
-   "behind": "G"
-  },
-  {
-   "ts": "2026-06-11T20:27:22Z",
-   "kind": "latency",
-   "match": "South Korea vs Czechia",
-   "duration_s": 22.0,
-   "truth": "1-0",
-   "observed": "0-0",
-   "behind": "G"
-  }
- ],
- "match_list": [
-  "Mexico vs South Africa",
-  "South Korea vs Czechia"
- ]
+ "trend": [],
+ "trend_direction": "flat",
+ "findings": [],
+ "match_list": []
 }
