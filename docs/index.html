@@ -2,470 +2,284 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Carmel Valley Technologies — Silicon Valley technology, with Carmel Valley soul</title>
-<meta name="description" content="Carmel Valley Technologies brings world-class technology to businesses that care about experience — built on Silicon Valley rigor, grounded in the Carmel Valley community, and dedicated to bringing everyone along.">
-<link rel="canonical" href="https://carmelvalleytechnologies.com/">
-<!-- Social share (Open Graph + Twitter) -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Carmel Valley Technologies">
-<meta property="og:title" content="Carmel Valley Technologies — Silicon Valley technology, with Carmel Valley soul">
-<meta property="og:description" content="World-class technology for businesses that care about experience. Built on Silicon Valley rigor, grounded in the Carmel Valley community.">
-<meta property="og:url" content="https://carmelvalleytechnologies.com/">
-<meta property="og:image" content="https://carmelvalleytechnologies.com/og-share.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Carmel Valley Technologies">
-<meta name="twitter:description" content="Silicon Valley technology, with Carmel Valley soul.">
-<meta name="twitter:image" content="https://carmelvalleytechnologies.com/og-share.png">
-<!-- Structured data for local search -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Carmel Valley Technologies",
-  "url": "https://carmelvalleytechnologies.com/",
-  "logo": "https://carmelvalleytechnologies.com/cvt-logo-1200.png",
-  "image": "https://carmelvalleytechnologies.com/og-share.png",
-  "description": "Technology consulting for businesses that care about experience — built on Silicon Valley rigor, grounded in the Carmel Valley community.",
-  "email": "hello@carmelvalleytechnologies.com",
-  "founder": {"@type": "Person", "name": "Chris Coyoli", "sameAs": "https://www.linkedin.com/in/chriscoyoli/"},
-  "address": {"@type": "PostalAddress", "addressLocality": "Carmel Valley", "addressRegion": "CA", "addressCountry": "US"},
-  "areaServed": "Monterey County, California"
-}
-</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIFA Score Accuracy Audit · Google vs FotMob</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- Favicon (browser tab icon) — uses the CVT logo files in the repo root -->
-<link rel="icon" type="image/svg+xml" href="cvt-logo.svg">
-<link rel="icon" type="image/png" sizes="300x300" href="cvt-logo-300.png">
-<link rel="apple-touch-icon" href="cvt-logo-300.png">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700;125,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#19271f;
-    --green:#163a2b;
-    --green-deep:#0d231a;
-    --cream:#f6f1e6;
-    --cream-2:#efe7d6;
-    --paper:#fcf9f2;
-    --brass:#956c2c;
-    --brass-l:#cba968;
-    --muted:#4d5d53;
-    --muted-soft:#62716a;
-    --muted-on-green:#c4d1c6;
-    --line:#dcd3c0;
-    --line-soft:#e6ddcc;
-    --btn-text:#fdfbf6;
-    --serif:'Lora',Georgia,serif;
-    --sans:'Mulish',-apple-system,sans-serif;
+    --paper:#F5F7F4; --panel:#FFFFFF; --ink:#15231B; --muted:#5C6B61;
+    --hairline:#DCE4DA; --pitch:#1F7A44; --pitch-deep:#14532D;
+    --amber:#C97B12; --red:#C2371F; --mono:'JetBrains Mono',monospace;
   }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--paper);color:var(--ink);font:16px/1.55 'Inter',system-ui,sans-serif;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px 64px}
 
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-  body{
-    font-family:var(--sans);
-    background:var(--cream);
-    color:var(--ink);
-    line-height:1.72;
-    font-size:17px;
-    font-weight:400;
-    overflow-x:hidden;
-    word-break:break-word;
-    overflow-wrap:break-word;
-  }
-  body::before{
-    content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.03;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
+  header{display:flex;align-items:center;gap:14px;padding:22px 0 16px;flex-wrap:wrap}
+  .wordmark{font-family:'Archivo',sans-serif;font-weight:800;font-stretch:125%;letter-spacing:.04em;font-size:15px;text-transform:uppercase}
+  .wordmark span{color:var(--pitch)}
+  .updated{margin-left:auto;font-size:13px;color:var(--muted)}
+  .updated b{color:var(--ink);font-weight:600}
 
-  .wrap{max-width:1140px;margin:0 auto;padding:0 40px}
-  @media(max-width:600px){.wrap{padding:0 24px}}
+  .status{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:13px;
+    padding:6px 13px;border:1px solid var(--hairline);border-radius:999px;background:var(--panel)}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .ok .dot{background:var(--pitch)}    .ok{color:var(--pitch-deep)}
+  .warn .dot{background:var(--amber)}  .warn{color:#8a5408}
+  .bad .dot{background:var(--red)}     .bad{color:#8f2412}
+  .none .dot{background:#aab4ab}       .none{color:var(--muted)}
 
-  .eyebrow{
-    font-family:var(--sans);font-size:12px;font-weight:700;
-    letter-spacing:.24em;text-transform:uppercase;color:var(--brass);
-    display:inline-flex;align-items:center;gap:13px;
-  }
-  .eyebrow::before{content:"";width:30px;height:1.5px;background:var(--brass);opacity:.8}
-  .band .eyebrow,.dark .eyebrow{color:var(--brass-l)}
-  .band .eyebrow::before,.dark .eyebrow::before{background:var(--brass-l)}
+  .purpose{padding:14px 0 6px;border-top:1px solid var(--hairline);font-size:15.5px;max-width:72ch;color:var(--ink)}
+  .purpose b{font-weight:600}
 
-  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.18;letter-spacing:-.005em}
+  .demo{margin:16px 0 0;padding:10px 14px;border:1px dashed var(--amber);border-radius:8px;
+    background:#FCF4E7;font-size:14px;color:#7a4a06}
 
-  /* ===== NAV ===== */
-  nav{position:sticky;top:0;z-index:100;background:rgba(246,241,230,.85);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;height:76px}
-  .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);min-width:0;flex:1}
-  .seal{width:40px;height:40px;border:1.5px solid var(--brass);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;font-size:14px;color:var(--green);flex-shrink:0}
-  .brand-logo{width:42px;height:42px;border-radius:9px;flex-shrink:0;display:block}
-  .brand-text{font-family:var(--serif);font-size:18px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-  .nav-links{display:flex;align-items:center;gap:36px;flex-shrink:0}
-  .nav-links a{text-decoration:none;color:var(--ink);font-size:15px;font-weight:600;opacity:.8;transition:opacity .2s}
-  .nav-links a:hover{opacity:1}
-  .btn{display:inline-block;font-family:var(--sans);font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;border:none;transition:all .25s ease}
-  .btn-primary{background:var(--green);color:var(--btn-text);padding:14px 28px;border-radius:2px;letter-spacing:.01em}
-  .btn-primary:hover{background:var(--green-deep);transform:translateY(-1px);box-shadow:0 8px 22px rgba(13,35,26,.18)}
-  .nav-links a.btn-primary{color:var(--btn-text);opacity:1}
-  .nav-links a.btn-primary:hover{color:#fff;opacity:1}
-  .nav-cta{padding:11px 22px;white-space:nowrap;flex-shrink:0}
-  @media(max-width:820px){.nav-links a:not(.btn){display:none}}
+  .hero{padding:34px 0 26px;display:grid;grid-template-columns:auto 1fr;gap:6px 36px;align-items:end}
+  .big{font-family:var(--mono);font-weight:700;font-size:clamp(64px,12vw,104px);line-height:.95;
+    letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .big small{font-size:.38em;font-weight:500;color:var(--muted);letter-spacing:0}
+  .eyebrow{grid-column:1/-1;font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:700;
+    text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--muted)}
+  .herolabel{font-size:14px;color:var(--muted);max-width:30ch;padding-bottom:8px}
+  .verdict{grid-column:1/-1;font-size:17px;max-width:62ch}
+  @media (max-width:640px){.hero{grid-template-columns:1fr}.herolabel{padding-bottom:0}}
 
-  /* ===== HERO ===== */
-  header{padding:104px 0 0}
-  .hero-loc{margin-bottom:30px}
-  h1.hero{font-size:clamp(42px,6vw,76px);max-width:16ch;margin:24px 0 0}
-  h1.hero em{font-style:italic;color:var(--green)}
-  .hero-sub{font-size:clamp(18px,1.8vw,21px);color:var(--muted);max-width:60ch;margin-top:30px;line-height:1.62}
-  .hero-cta{display:flex;align-items:center;gap:28px;margin-top:42px;flex-wrap:wrap}
-  .link-arrow{font-weight:700;font-size:15px;color:var(--green);text-decoration:none;display:inline-flex;align-items:center;gap:9px}
-  .link-arrow span{transition:transform .25s ease}
-  .link-arrow:hover span{transform:translateX(5px)}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hairline);
+    border:1px solid var(--hairline);border-radius:10px;overflow:hidden}
+  .kpi{background:var(--panel);padding:15px 17px}
+  .kpi .v{font-family:var(--mono);font-size:25px;font-weight:700;font-variant-numeric:tabular-nums}
+  .kpi .l{font-size:13px;font-weight:600;margin-top:2px}
+  .kpi .d{font-size:12px;color:var(--muted);margin-top:1px}
+  @media (max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}}
 
-  /* hero photo */
-  .scene{margin-top:72px;width:100%;border-top:3px solid var(--brass);box-shadow:0 -1px 0 rgba(149,108,44,.25);overflow:hidden}
-  .scene img{display:block;width:100%;height:clamp(300px,40vw,470px);object-fit:cover;object-position:center 52%}
+  h2{font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:800;text-transform:uppercase;
+    letter-spacing:.06em;font-size:14px;margin:42px 0 10px}
+  .h2sub{font-size:13.5px;color:var(--muted);margin:0 0 14px;max-width:68ch}
 
-  /* reveal */
-  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
-  .reveal.in{opacity:1;transform:none}
-  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
-  @media (prefers-reduced-motion: reduce){
-    .reveal{opacity:1;transform:none;transition:none}
-    html{scroll-behavior:auto}
-  }
-  /* small source/attribution note */
-  .src-note{font-size:12.5px;color:var(--muted-soft);margin-top:26px;letter-spacing:.02em}
+  .pitch-panel{background:linear-gradient(180deg,#227C47 0%,#1C6E3E 100%);border-radius:12px;
+    padding:18px 16px 10px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+  .pitch-panel svg{display:block;width:100%;height:auto}
+  .legend{display:flex;gap:18px;font-size:12.5px;color:var(--muted);margin-top:10px;flex-wrap:wrap}
+  .legend i{display:inline-block;width:18px;height:0;border-top:3px solid;margin-right:6px;vertical-align:middle;border-radius:2px}
 
-  section{padding:108px 0}
-  .sec-head{max-width:62ch}
-  .sec-head h2{font-size:clamp(31px,3.7vw,46px);margin-top:22px}
-  .sec-head .lead{font-size:19px;color:var(--muted);margin-top:24px;line-height:1.62}
+  table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--hairline);
+    border-radius:10px;overflow:hidden;font-size:14px}
+  th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--hairline)}
+  th{font-family:'Archivo',sans-serif;font-stretch:125%;font-size:11.5px;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--muted);font-weight:700;background:#FBFCFA}
+  tr:last-child td{border-bottom:none}
+  td.mono{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px}
+  .tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600}
+  .tag.latency{background:#FCF4E7;color:#8a5408}
+  .tag.discrepancy,.tag.resolved{background:#FBEAE6;color:#8f2412}
+  .empty{padding:22px;text-align:center;color:var(--muted)}
 
-  /* stat strip */
-  .stats{display:flex;gap:54px;flex-wrap:wrap;margin-top:54px;padding-top:38px;border-top:1px solid var(--line)}
-  .stat{flex:1;min-width:170px}
-  .stat .n{font-family:var(--serif);font-size:40px;font-weight:600;color:var(--green);line-height:1}
-  .stat .l{font-size:14.5px;color:var(--muted-soft);margin-top:10px;line-height:1.45}
+  .guide{background:var(--panel);border:1px solid var(--hairline);border-radius:10px;padding:20px 22px;max-width:none}
+  .guide dl{display:grid;grid-template-columns:max-content 1fr;gap:10px 18px;font-size:14px}
+  .guide dt{font-weight:600;white-space:nowrap}
+  .guide dd{color:var(--muted)}
+  .guide dd b{color:var(--ink);font-weight:600}
+  @media (max-width:640px){.guide dl{grid-template-columns:1fr}.guide dt{margin-top:6px}}
 
-  /* services grid */
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:64px;border-top:1px solid var(--line)}
-  .card{padding:42px 38px;border-bottom:1px solid var(--line)}
-  .card:first-child{padding-left:0}
-  .card:last-child{padding-right:0}
-  .card:not(:last-child){border-right:1px solid var(--line)}
-  .card .num{font-family:var(--serif);font-size:15px;color:var(--brass);font-weight:600}
-  .card h3{font-size:24px;margin:16px 0 14px;color:var(--green)}
-  .card p{font-size:16px;color:var(--muted);line-height:1.65}
-  @media(max-width:860px){.grid{grid-template-columns:1fr}.card,.card:first-child,.card:last-child,.card:not(:last-child){border-right:none;padding:32px 0}}
-
-  /* ===== MOBILE PASS ===== */
-  @media(max-width:600px){
-    section{padding:64px 0}
-    header{padding:72px 0 0}
-    .scene{margin-top:46px;border-top-width:2px}
-    .scene img{height:clamp(210px,52vw,300px)}
-    .nav-inner{height:64px}
-    .seal{width:34px;height:34px;font-size:12px}
-    .brand-logo{width:36px;height:36px;border-radius:8px}
-    .brand{gap:10px}
-    .brand-text{font-size:15px}
-    .nav-cta{padding:10px 15px;font-size:13px}
-    .hero-loc{margin-bottom:22px}
-    .hero-sub{margin-top:22px}
-    .hero-cta{gap:18px;margin-top:30px}
-    .stats{flex-direction:column;gap:22px;margin-top:38px;padding-top:30px}
-    .stat .n{font-size:34px}
-    .grid{margin-top:38px}
-    .form-card{padding:26px}
-  }
-  /* very small phones: shrink brand further so the button always fits */
-  @media(max-width:380px){
-    .brand-text{font-size:13px}
-    .brand{gap:8px}
-    .nav-cta{padding:9px 13px;font-size:12px}
-  }
-
-  /* ===== ABOUT ===== */
-  .about{background:var(--paper);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
-  .about .wrap{display:grid;grid-template-columns:340px 1fr;gap:72px;align-items:start}
-  .portrait{position:relative}
-  .portrait .frame{width:100%;aspect-ratio:4/5;border:1.5px solid var(--brass);border-radius:3px;overflow:hidden;background:linear-gradient(160deg,#1f4736,#163a2b 60%,#0f2a1f);position:relative}
-  /* Headshot: add a file named chris-coyoli.jpg next to index.html and it appears automatically.
-     Until then, the "CC" monogram shows. */
-  .portrait .frame .headshot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
-  .portrait .frame svg{position:absolute;bottom:0;width:100%;height:auto;opacity:.9}
-  .portrait .frame .ini{position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);font-family:var(--serif);font-size:74px;color:rgba(203,169,104,.5);font-weight:500}
-  .portrait .cap{margin-top:18px;text-align:center}
-  .portrait .cap .nm{font-family:var(--serif);font-size:20px;color:var(--green);font-weight:600}
-  .portrait .cap .ro{font-size:13px;letter-spacing:.06em;color:var(--muted-soft);text-transform:uppercase;margin-top:4px}
-  .about h2{font-size:clamp(30px,3.6vw,44px);margin-top:20px;max-width:18ch}
-  .about p{font-size:17px;color:var(--muted);margin-top:22px;line-height:1.7;max-width:60ch}
-  .about-link{display:inline-flex;align-items:center;gap:8px;margin-top:28px;font-weight:700;font-size:14.5px;color:var(--green);text-decoration:none;border-bottom:1.5px solid var(--brass);padding-bottom:3px;transition:color .2s}
-  .about-link:hover{color:var(--brass)}
-  .about-link span{transition:transform .25s ease}
-  .about-link:hover span{transform:translateX(4px)}
-  .exp{margin-top:34px;padding-top:30px;border-top:1px solid var(--line)}
-  .exp .lbl{font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--brass)}
-  .exp .cos{display:flex;flex-wrap:wrap;gap:10px 14px;margin-top:18px}
-  .exp .cos span{font-family:var(--serif);font-size:18px;color:var(--green);font-weight:600}
-  .exp .cos span:not(:last-child)::after{content:"·";margin-left:14px;color:var(--brass);opacity:.6}
-  @media(max-width:820px){.about .wrap{grid-template-columns:1fr;gap:40px}.portrait{max-width:300px}}
-
-  /* belief band */
-  .band{background:var(--green);color:var(--cream);position:relative;overflow:hidden}
-  .band .wrap{position:relative;z-index:1}
-  .band h2{font-size:clamp(31px,3.9vw,47px);color:var(--cream);margin-top:22px;max-width:20ch}
-  .band p{font-size:18px;color:var(--muted-on-green);max-width:62ch;margin-top:26px;line-height:1.68}
-  .band-mark{position:absolute;right:-50px;bottom:-90px;font-family:var(--serif);font-size:330px;color:rgba(255,255,255,.05);line-height:1;font-weight:600;pointer-events:none;user-select:none;z-index:0}
-  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:38px;margin-top:52px;padding-top:42px;border-top:1px solid rgba(255,255,255,.16)}
-  .pillar h3{font-size:21px;color:var(--cream);margin-bottom:11px}
-  .pillar p{font-size:15.5px;color:var(--muted-on-green);line-height:1.62;margin:0;max-width:none}
-  @media(max-width:760px){.pillars{grid-template-columns:1fr;gap:28px;margin-top:38px;padding-top:32px}}
-
-  /* discovery + form */
-  .discovery .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:72px;align-items:start}
-  .discovery h2{font-size:clamp(29px,3.5vw,42px);margin-top:18px}
-  .discovery p{font-size:17px;color:var(--muted);margin-top:22px;line-height:1.68;max-width:46ch}
-  .form-card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:40px;box-shadow:0 18px 44px rgba(25,39,31,.06)}
-  .form-card h3{font-size:22px;color:var(--green);margin-bottom:8px}
-  .form-card .fc-sub{font-size:14.5px;color:var(--muted-soft);margin-bottom:26px}
-  .field{margin-bottom:18px}
-  .field label{display:block;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
-  .field input,.field textarea{width:100%;font-family:var(--sans);font-size:16px;color:var(--ink);background:var(--cream);border:1px solid var(--line);border-radius:3px;padding:13px 15px;transition:border-color .2s,box-shadow .2s}
-  .field input::placeholder,.field textarea::placeholder{color:#9aa49d}
-  .field input:focus,.field textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(22,58,43,.1)}
-  .field textarea{resize:vertical;min-height:108px}
-  .form-card button{width:100%;margin-top:8px;padding:15px;font-size:15px}
-  @media(max-width:860px){.discovery .wrap{grid-template-columns:1fr;gap:44px}.form-card{padding:30px}}
-
-  /* footer */
-  footer{background:var(--green-deep);color:var(--muted-on-green);padding:58px 0}
-  .foot-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:22px}
-  .foot-brand{display:flex;align-items:center;gap:13px;color:var(--cream)}
-  .foot-brand .seal{border-color:var(--brass-l);color:var(--cream)}
-  .foot-brand span{font-family:var(--serif);font-size:17px}
-  .foot-meta{font-size:14px;line-height:1.7;text-align:right}
-  .foot-meta a{color:var(--brass-l);text-decoration:none}
-  @media(max-width:600px){.foot-meta{text-align:left}}
+  footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--hairline);
+    font-size:12.5px;color:var(--muted);max-width:72ch}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<nav>
-  <div class="wrap nav-inner">
-    <a class="brand" href="#top"><img class="brand-logo" src="cvt-logo.svg" alt="Carmel Valley Technologies logo" onerror="this.outerHTML='&lt;span class=\'seal\'&gt;CVT&lt;/span&gt;'"><span class="brand-text">Carmel Valley Technologies</span></a>
-    <div class="nav-links">
-      <a href="#belief">Our belief</a>
-      <a href="#what">What we do</a>
-      <a href="#about">About</a>
-      <a class="btn btn-primary nav-cta" href="#start">Get in touch</a>
-    </div>
-  </div>
-</nav>
-
-<header id="top">
-  <div class="wrap">
-    <div class="hero-loc reveal in"><span class="eyebrow">Carmel Valley, California</span></div>
-    <h1 class="hero reveal in d1">Silicon Valley technology, with <em>Carmel Valley soul.</em></h1>
-    <p class="hero-sub reveal in d2">Carmel Valley Technologies brings world-class technology to businesses that care about experience — built on the rigor of Silicon Valley, grounded in the community and history of Carmel Valley, and dedicated to bringing everyone along for the journey. Wherever you are, if you believe technology should serve people and not the other way around, you're who we're built for.</p>
-    <div class="hero-cta reveal in d3">
-      <a class="btn btn-primary" href="#start">Request a conversation</a>
-      <a class="link-arrow" href="#belief">What we believe <span>&rarr;</span></a>
-    </div>
-  </div>
-  <div class="scene reveal in">
-    <!-- Hero photo: Carmel-Valley.jpg, hosted in this repo. Relative path works on both
-         chriscoyoli.github.io/cvt/ and your custom domain once it resolves.
-         (Reminder: confirm you have the right to use this image commercially before launch.) -->
-    <img src="Carmel-Valley.jpg" alt="Carmel Valley, California — rolling hills and vineyards">
-  </div>
+<header>
+  <div class="wordmark">FIFA Score <span>Accuracy Audit</span></div>
+  <div id="status" class="status none"><span class="dot"></span><span id="statusText">Awaiting data</span></div>
+  <div class="updated">Updated <b id="updatedAt">–</b> <span id="freshness"></span></div>
 </header>
 
-<section id="belief" class="band">
-  <div class="wrap">
-    <span class="eyebrow reveal">Our belief</span>
-    <h2 class="reveal d1">The best technology disappears.</h2>
-    <p class="reveal d2">Carmel Valley taught us something worth carrying everywhere: heritage, community, and a high standard of experience are worth protecting. Too often technology works against those things — adding friction, flattening character, leaving people behind. We believe it can do the opposite. Applied with care, it strengthens what people value rather than overrunning it, and brings everyone along instead of leaving anyone behind.</p>
-    <div class="pillars">
-      <div class="pillar reveal d1">
-        <h3>Community</h3>
-        <p>Technology that brings people together and reinforces the ties that make a business, and a place, feel like home.</p>
-      </div>
-      <div class="pillar reveal d2">
-        <h3>Heritage</h3>
-        <p>Solutions that respect the character and history of what you've built, rather than paving over what makes it singular.</p>
-      </div>
-      <div class="pillar reveal d3">
-        <h3>Experience</h3>
-        <p>Friction removed at every turn, so every customer, member, and visit feels effortless and considered.</p>
-      </div>
-    </div>
-  </div>
-  <div class="band-mark" aria-hidden="true">CVT</div>
+<p class="purpose">
+This dashboard measures <b>how accurately Google search shows live FIFA World Cup scores</b>.
+Google licenses these scores from a sports data provider. During every live match, an automated
+check compares the score on Google against <b>FotMob.com, the source of truth</b>, every 30 seconds.
+</p>
+
+<div id="demoBanner" class="demo" hidden>
+  Sample data is shown. Live results appear automatically once matches are being audited.
+</div>
+
+<section class="hero">
+  <div class="eyebrow">Google score accuracy · last <span id="windowH">24</span> hours</div>
+  <div class="big"><span id="accuracy">–</span><small>%</small></div>
+  <p class="herolabel">of checks where Google's score matched FotMob exactly</p>
+  <p class="verdict" id="verdictText">Waiting for the first audit cycle.</p>
 </section>
 
-<section id="what">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">What we do</span>
-      <h2>Silicon Valley capability, at the scale of your business.</h2>
-      <p class="lead">We work with businesses across industries — hospitality and clubs, wineries and restaurants, professional and family-run firms, and the teams who run them — putting modern technology to work in service of their customers, never the other way around. The same rigor that built products used by millions, applied with the care your business deserves.</p>
-    </div>
-    <div class="grid">
-      <div class="card reveal">
-        <span class="num">01</span>
-        <h3>Customer Experience</h3>
-        <p>Booking, payments, communication, and the small moments in between — designed so every interaction with your business feels effortless and unmistakably yours.</p>
-      </div>
-      <div class="card reveal d1">
-        <span class="num">02</span>
-        <h3>Operations &amp; Systems</h3>
-        <p>The behind-the-scenes technology your team relies on — tied together, reliable, and quietly out of the way, so your people can focus on hospitality instead of software.</p>
-      </div>
-      <div class="card reveal d2">
-        <span class="num">03</span>
-        <h3>Strategy &amp; Modernization</h3>
-        <p>A clear-eyed look at where technology genuinely moves your business — and a practical roadmap to get there without losing what makes you, you.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="kpis">
+  <div class="kpi"><div class="v" id="kChecks">–</div><div class="l">Checks run</div><div class="d">score comparisons made</div></div>
+  <div class="kpi"><div class="v" id="kLag">–</div><div class="l">Median delay</div><div class="d">time for Google to catch up after a goal</div></div>
+  <div class="kpi"><div class="v" id="kDisc">–</div><div class="l">Score errors</div><div class="d">wrong for over 90 seconds</div></div>
+  <div class="kpi"><div class="v" id="kMatches">–</div><div class="l">Matches audited</div><div class="d">in the last 24 hours</div></div>
+</div>
 
-<section id="how">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">How we work</span>
-      <h2>Simple, transparent, and at your pace.</h2>
-      <p class="lead">No jargon, no land-grab engagements. Every relationship follows the same three steps, and you'll always know exactly where things stand.</p>
-    </div>
-    <div class="grid">
-      <div class="card reveal">
-        <span class="num">01</span>
-        <h3>Listen</h3>
-        <p>We start with a conversation about your business — how it runs today, what's working, and where the friction lives. No pitch, no obligation.</p>
-      </div>
-      <div class="card reveal d1">
-        <span class="num">02</span>
-        <h3>Assess</h3>
-        <p>We take a clear-eyed look at your systems and workflows, then bring back a plain-language picture of what's worth doing, what isn't, and why.</p>
-      </div>
-      <div class="card reveal d2">
-        <span class="num">03</span>
-        <h3>Build</h3>
-        <p>We implement together at a pace that fits your operation and season — measuring against the outcomes that matter to you, not vanity metrics.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<h2>Accuracy over time</h2>
+<p class="h2sub">Each dot is 15 minutes of live play. Higher is better. If the line drifts down toward
+the dashed thresholds, Google's accuracy is getting worse.</p>
+<div class="pitch-panel"><svg id="chart" viewBox="0 0 920 300" role="img" aria-label="Google score accuracy trend"></svg></div>
+<div class="legend">
+  <span><i style="border-color:#FFFFFF"></i>Google accuracy</span>
+  <span><i style="border-color:#F2C063;border-top-style:dashed"></i>99% · watch</span>
+  <span><i style="border-color:#F0907A;border-top-style:dashed"></i>95% · action needed</span>
+</div>
 
-<section id="focus">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Where we're starting</span>
-      <h2>One starting point, in a county full of them.</h2>
-      <p class="lead">Monterey County is rich with businesses that set a high bar — golf and hospitality, world-class wineries, agriculture, tourism, and the institutions that anchor the community. We're beginning our work in golf, an industry whose blend of heritage, community, and experience mirrors our own values, and where we're listening closely to understand where technology can help. It's the first chapter, not the whole story — and the same approach extends to any business that shares the belief.</p>
-    </div>
-    <div class="stats reveal d1">
-      <div class="stat"><div class="n">48M+</div><div class="l">Americans now play golf — participation at an all-time high</div></div>
-      <div class="stat"><div class="n">Flat</div><div class="l">Course supply, even as rounds and waitlists climb — every tee time matters more</div></div>
-      <div class="stat"><div class="n">Off-course</div><div class="l">play has overtaken on-course as the fastest-growing part of the game</div></div>
-    </div>
-    <p class="src-note reveal d2">Source: National Golf Foundation industry participation research.</p>
-  </div>
-</section>
+<h2>Disagreement log</h2>
+<p class="h2sub">Every moment Google's score differed from FotMob, and how long it took to correct.</p>
+<table>
+  <thead><tr><th>Time (UTC)</th><th>Type</th><th>Match</th><th>FotMob (truth)</th><th>Google</th><th>Lasted</th></tr></thead>
+  <tbody id="findings"><tr><td colspan="6" class="empty">No disagreements recorded.</td></tr></tbody>
+</table>
 
-<section id="about" class="about">
-  <div class="wrap">
-    <div class="portrait reveal">
-      <div class="frame">
-        <!-- Add a file named chris-coyoli.jpg next to index.html and it appears here automatically.
-             Until then, the "CC" monogram shows. -->
-        <img class="headshot" src="chris-coyoli.jpg" alt="Chris Coyoli" onerror="this.remove()">
-        <div class="ini">CC</div>
-        <svg viewBox="0 0 340 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M0 70 C 90 50, 180 66, 260 54 S 340 56, 340 64 L340 120 L0 120 Z" fill="rgba(203,169,104,0.22)"/>
-          <path d="M0 92 C 100 76, 200 92, 300 82 S 340 86, 340 90 L340 120 L0 120 Z" fill="rgba(203,169,104,0.16)"/>
-        </svg>
-      </div>
-      <div class="cap">
-        <div class="nm">Chris Coyoli</div>
-        <div class="ro">Founder</div>
-      </div>
-    </div>
-    <div>
-      <span class="eyebrow reveal">About</span>
-      <h2 class="reveal d1">Silicon Valley experience, brought home to the Peninsula.</h2>
-      <p class="reveal d1">Carmel Valley Technologies was founded by Chris Coyoli, who spent his career in Silicon Valley technology — in operations and systems roles at companies whose products are used by millions, with a deep stretch in enterprise software and fintech. The throughline was always the same: making complex technology dependable, useful, and genuinely worth it.</p>
-      <p class="reveal d2">He started this firm to bring that capability home — to the community he's part of. The businesses of the Monterey Peninsula set the standard for hospitality and experience; they deserve technology that meets it, applied at a human scale and with real respect for the place.</p>
-      <a class="about-link reveal d2" href="https://www.linkedin.com/in/chriscoyoli/" target="_blank" rel="noopener">Connect with Chris on LinkedIn <span>&rarr;</span></a>
-      <div class="exp reveal d2">
-        <div class="lbl">Experience across</div>
-        <!-- EDIT: list ONLY companies where you personally held a role. Prospects will check LinkedIn. -->
-        <div class="cos">
-          <span>Google</span><span>Meta</span><span>LinkedIn</span><span>Microsoft</span><span>Intuit</span><span>Affirm</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="start" class="discovery">
-  <div class="wrap">
-    <div class="reveal">
-      <span class="eyebrow">Getting started</span>
-      <h2>We're listening first.</h2>
-      <p>Before recommending anything, we listen. We're spending time with business leaders to understand the challenges that matter most — the ones that cost real time, revenue, and goodwill — starting with conversations in the golf community and extending outward from there.</p>
-      <p>If you run a business that cares about the experience you deliver, we'd value a short conversation. No pitch — just listening, and a genuine effort to understand your world.</p>
-    </div>
-    <div class="form-card reveal d1">
-      <h3>Request a conversation</h3>
-      <p class="fc-sub">A few details and we'll be in touch personally — typically within one business day.</p>
-      <!-- EDIT: set the email in the action below. FormSubmit sends a one-time confirmation email
-           to activate. After activating, you can swap in their hashed alias to hide your address. -->
-      <form action="https://formsubmit.co/hello@carmelvalleytechnologies.com" method="POST">
-        <input type="hidden" name="_subject" value="New inquiry — Carmel Valley Technologies">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="https://carmelvalleytechnologies.com/thanks.html">
-        <input type="text" name="_honey" style="display:none">
-        <div class="field">
-          <label for="name">Name</label>
-          <input id="name" type="text" name="name" placeholder="Your name" required>
-        </div>
-        <div class="field">
-          <label for="email">Email</label>
-          <input id="email" type="email" name="email" placeholder="you@example.com" required>
-        </div>
-        <div class="field">
-          <label for="org">Business / organization</label>
-          <input id="org" type="text" name="organization" placeholder="Where you operate or manage">
-        </div>
-        <div class="field">
-          <label for="msg">What's on your mind</label>
-          <textarea id="msg" name="message" placeholder="A sentence or two about your business and what you're navigating."></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Send message</button>
-      </form>
-    </div>
-  </div>
-</section>
+<h2>How to read this dashboard</h2>
+<div class="guide">
+  <dl>
+    <dt>Accuracy</dt>
+    <dd>The percentage of all checks where Google's score matched FotMob exactly. This is the headline number.</dd>
+    <dt>Delay</dt>
+    <dd>Right after a goal, sources can briefly disagree while feeds update. If Google corrects itself
+    <b>within 90 seconds</b>, it counts as a delay, which is normal, and we record how long it took.</dd>
+    <dt>Score error</dt>
+    <dd>If Google stays wrong for <b>more than 90 seconds</b>, normal delay can no longer explain it.
+    This counts as an error and is the failure that matters.</dd>
+    <dt><span style="color:var(--pitch-deep)">● Accurate</span></dt>
+    <dd>No recent errors and accuracy is holding. No action needed.</dd>
+    <dt><span style="color:#8a5408">● Degrading</span></dt>
+    <dd>Accuracy is trending down or delays are growing. Keep watching.</dd>
+    <dt><span style="color:#8f2412">● Action needed</span></dt>
+    <dd>A score error occurred in the last hour, or accuracy fell below 95%. <b>Raise it with Google's
+    data provider</b>, using the disagreement log above as evidence.</dd>
+  </dl>
+</div>
 
 <footer>
-  <div class="wrap foot-inner">
-    <div class="foot-brand"><img class="brand-logo" src="cvt-logo.svg" alt="Carmel Valley Technologies logo" onerror="this.outerHTML='&lt;span class=\'seal\'&gt;CVT&lt;/span&gt;'"><span>Carmel Valley Technologies</span></div>
-    <div class="foot-meta">
-      Carmel Valley, California &nbsp;·&nbsp; <a href="mailto:hello@carmelvalleytechnologies.com">hello@carmelvalleytechnologies.com</a><br>
-      <span style="opacity:.6">© 2026 Carmel Valley Technologies. All rights reserved.</span>
-    </div>
-  </div>
+  Checks run every 30 seconds during live play only. FotMob (Opta data) is treated as the source of
+  truth in this version. This page refreshes its data every 60 seconds.
 </footer>
 
+</div>
 <script>
-  const io=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
-  },{threshold:.12});
-  document.querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));
+const DATA_URL = 'data/audit.json';
+const $ = id => document.getElementById(id);
+
+async function load(){
+  try{
+    const r = await fetch(DATA_URL + '?t=' + Date.now(), {cache:'no-store'});
+    if(!r.ok) throw new Error(r.status);
+    render(await r.json());
+  }catch(e){
+    $('statusText').textContent = 'Data unavailable';
+  }
+}
+
+function render(d){
+  const t = d.totals || {};
+  $('demoBanner').hidden = !d.demo;
+  $('windowH').textContent = d.window_hours ?? 24;
+
+  const gen = new Date(d.generated_at);
+  $('updatedAt').textContent = gen.toLocaleString(undefined,{hour:'2-digit',minute:'2-digit'});
+  const ageMin = (Date.now() - gen.getTime())/60000;
+  $('freshness').textContent = ageMin > 10 ? '· audit not currently running' : '· live';
+
+  const acc = t.accuracy_pct;
+  $('accuracy').textContent = acc == null ? '–' : acc.toFixed(1);
+  $('kChecks').textContent  = t.checks ?? '–';
+  $('kLag').textContent     = t.median_lag_s == null ? '0s' : t.median_lag_s + 's';
+  $('kDisc').textContent    = t.score_discrepancies ?? '–';
+  $('kMatches').textContent = t.matches ?? '–';
+
+  const latest = (d.trend && d.trend.length) ? d.trend[d.trend.length-1].accuracy_pct : null;
+  const recentDisc = (d.findings||[]).some(f =>
+    f.kind === 'discrepancy' && (Date.now() - new Date(f.ts).getTime()) < 3600000);
+  let cls='none', txt='Awaiting data', verdict='Waiting for the first audit cycle.';
+  if (acc != null){
+    if (recentDisc || (latest != null && latest < 95)){
+      cls='bad'; txt='Action needed';
+      verdict = 'Google showed a wrong score for longer than normal delay can explain. The disagreement log below is the evidence to raise with Google\'s data provider.';
+    } else if ((d.trend_direction === 'down' && acc < 99) || (t.median_lag_s||0) > 60){
+      cls='warn'; txt='Degrading';
+      verdict = 'Google is still broadly correct, but accuracy is trending down or delays are growing. Keep watching before escalating.';
+    } else {
+      cls='ok'; txt='Accurate';
+      verdict = `Google matched FotMob on ${t.agreed} of ${t.checks} checks` +
+        (t.median_lag_s ? `, taking a median of ${t.median_lag_s}s to catch up after goals.` : ', with no measurable delays.');
+    }
+  }
+  $('status').className = 'status ' + cls;
+  $('statusText').textContent = txt;
+  $('verdictText').innerHTML = verdict;
+
+  drawChart(d.trend || []);
+  drawFindings(d.findings || []);
+}
+
+function drawChart(trend){
+  const svg = $('chart'), W=920, H=300, pad={l:46,r:14,t:16,b:34};
+  const yMin=90, yMax=100;
+  const X = i => trend.length<2 ? W/2 : pad.l + i*(W-pad.l-pad.r)/(trend.length-1);
+  const Y = v => pad.t + (yMax - Math.max(v,yMin))*(H-pad.t-pad.b)/(yMax-yMin);
+  let s = '';
+
+  s += `<line x1="${(pad.l+W-pad.r)/2}" y1="${pad.t}" x2="${(pad.l+W-pad.r)/2}" y2="${H-pad.b}" stroke="rgba(255,255,255,.18)" stroke-width="2"/>`;
+  s += `<circle cx="${(pad.l+W-pad.r)/2}" cy="${(pad.t+H-pad.b)/2}" r="46" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="2"/>`;
+
+  for (const v of [100,98,96,94,92,90]){
+    s += `<line x1="${pad.l}" y1="${Y(v)}" x2="${W-pad.r}" y2="${Y(v)}" stroke="rgba(255,255,255,.10)"/>`;
+    s += `<text x="${pad.l-8}" y="${Y(v)+4}" text-anchor="end" font-size="11" fill="rgba(255,255,255,.75)" font-family="JetBrains Mono">${v}</text>`;
+  }
+  s += `<line x1="${pad.l}" y1="${Y(99)}" x2="${W-pad.r}" y2="${Y(99)}" stroke="#F2C063" stroke-dasharray="6 5" stroke-width="2"/>`;
+  s += `<line x1="${pad.l}" y1="${Y(95)}" x2="${W-pad.r}" y2="${Y(95)}" stroke="#F0907A" stroke-dasharray="6 5" stroke-width="2"/>`;
+
+  if (!trend.length){
+    s += `<text x="${W/2}" y="${H/2}" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="14" font-family="Inter">No live-match data in the window yet</text>`;
+  } else {
+    const pts = trend.map((b,i)=>[X(i), Y(b.accuracy_pct)]);
+    s += `<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
+    pts.forEach((p,i)=>{
+      const v = trend[i].accuracy_pct;
+      const c = v < 95 ? '#F0907A' : (v < 99 ? '#F2C063' : '#FFFFFF');
+      s += `<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="${c}"><title>${new Date(trend[i].bucket_start).toLocaleTimeString()} · ${v}% (${trend[i].checks} checks)</title></circle>`;
+    });
+    const step = Math.max(1, Math.floor(trend.length/6));
+    trend.forEach((b,i)=>{
+      if (i % step === 0 || i === trend.length-1){
+        const lbl = new Date(b.bucket_start).toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
+        s += `<text x="${X(i)}" y="${H-10}" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.75)" font-family="JetBrains Mono">${lbl}</text>`;
+      }
+    });
+  }
+  svg.innerHTML = s;
+}
+
+function drawFindings(findings){
+  const tb = $('findings');
+  if (!findings.length){
+    tb.innerHTML = '<tr><td colspan="6" class="empty">No disagreements recorded.</td></tr>';
+    return;
+  }
+  tb.innerHTML = findings.map(f => `
+    <tr>
+      <td class="mono">${new Date(f.ts).toISOString().slice(11,16)}</td>
+      <td><span class="tag ${f.kind}">${f.kind === 'discrepancy' ? 'score error' : 'delay'}</span></td>
+      <td>${esc(f.match)}</td>
+      <td class="mono">${esc(f.fotmob)}</td>
+      <td class="mono">${esc(f.google)}</td>
+      <td class="mono">${f.duration_s}s</td>
+    </tr>`).join('');
+}
+
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+load();
+setInterval(load, 60000);
 </script>
 </body>
 </html>
